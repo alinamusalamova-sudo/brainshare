@@ -1,0 +1,33 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>📚 Всё заметки</h1>
+
+<div class="notes-grid">
+    {% for note in notes %}
+    <div class="note-card {% if note.is_important %}important{% endif %}">
+        {% if note.is_important %}
+        <div class="important-badge">⭐ Важно!</div>
+        {% endif %}
+
+        <h3>
+            <a href="{% url 'notes:detail' note.id %}" style="text-decoration: none; color: #667eea;">
+                {{ note.title }}
+            </a>
+        </h3>
+
+        <div class="note-subject">{{ note.subject }}</div>
+        <p class="note-preview">{{ note.content|truncatechars:100 }}</p>
+
+        <div class="note-meta">
+            <span>👤 {{ note.author.username }}</span>
+            <span>📅 {{ note.created_at|date:"d.m.Y" }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <p>Пока нет заметок</p>
+    {% endfor %}
+</div>
+{% endblock %}

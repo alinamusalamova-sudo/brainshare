@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 50px auto; text-align: center;">
+    <h2>Удалить заметку?</h2>
+    <p>Вы уверены, что хотите удалить заметку <strong>"{{ note.title }}"</strong>?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background: #d1005a; color: white; padding: 10px 20px; border: none; border-radius: 5px;">
+            Да, удалить
+        </button>
+        <a href="{% url 'notes:detail' note.id %}">Отмена</a>
+    </form>
+</div>
+{% endblock %}

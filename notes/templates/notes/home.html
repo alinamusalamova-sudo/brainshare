@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - BrainShare{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 100%; text-align: left;">
+    <h2> Привет! Это BrainShare!</h2>
+    <p> На этой платформе можно делиться знаниями, получать за это награды и знакомиться с новыми людьми, кто тоже использует BrainShare</p>
+    <p> А пока ты можешь посмотреть свои заметки <a href="{% url 'notes:note_list' %}">здесь</a> или выбери другой раздел в меню.</p>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h3>
+            <a href="{% url 'notes:note_list' %}" class="nav-link" style="display: block; margin-top: 10px;">🎀 Заметки →</a>
+        </h3>
+        <p>Полезные материалы, конспекты и статьи</p>
+        <p class="category">12 заметок</p>
+    </div>
+
+    <div class="card">
+        <h3>
+            <a href="{% url 'communities:community_list' %}" class="nav-link" style="display: block; margin-top: 10px;">🎀 Сообщества →</a>
+        </h3>
+        <p>Группы по интересам</p>
+        <p class="category">3 сообщества</p>
+
+    </div>
+
+    <div class="card">
+        <h3>
+            <a href="{% url 'achievements:achievement_list' %}" class="nav-link" style="display: block; margin-top: 10px;">🎀 Достижения →</a>
+        </h3>
+        <p>Награды за активность</p>
+        <p class="category">5 достижений</p>
+
+    </div>
+</div>
+{% endblock %}

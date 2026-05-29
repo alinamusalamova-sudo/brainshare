@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>🏆 Достижения</h1>
+
+<div class="achievements-grid">
+    {% for ach in achievements %}
+    <div class="achievement-card {% if ach.is_rare %}rare{% endif %}">
+        <div class="achievement-icon">{{ ach.icon }}</div>
+        <h3>{{ ach.name }}</h3>
+        <div class="achievement-points">{{ ach.points }} баллов</div>
+        <p>{{ ach.description }}</p>
+        {% if ach.is_rare %}
+        <div class="rare-badge">Редкое!</div>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>Достижения пока не добавлены</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>👥 Сообщества</h1>
+
+<div class="communities-grid">
+    {% for community in communities %}
+    <div class="community-card {% if not community.is_active %}inactive{% endif %}">
+        <h3>{{ community.name }}</h3>
+        <p class="community-description">{{ community.description }}</p>
+
+        <div class="community-stats">
+            <span>👤 {{ community.members_count }} участников</span>  <!-- Было members, стало members_count -->
+        </div>
+
+        <div class="community-status">
+            {% if community.is_active %}
+            <span class="status-active">✓ Активное</span>
+            {% else %}
+            <span class="status-inactive">✗ Неактивно</span>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>Пока нет сообществ</p>
+    {% endfor %}
+</div>
+{% endblock %}

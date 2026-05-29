@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ff1493; border-radius: 10px;">
+    <h2>Регистрация</h2>
+
+    {% if form.errors %}
+        <div style="background: #ffe0e0; border: 1px solid red; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <p style="color: red; margin: 0;">Исправьте следующие ошибки:</p>
+            <ul style="color: red;">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ field|capfirst }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="background: #ff1493; color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+            Создать аккаунт
+        </button>
+    </form>
+
+    <p style="margin-top: 15px;">
+        Уже есть профиль? <a href="{% url 'users:login' %}" style="color: #ff1493;">Войти</a>
+    </p>
+</div>
+{% endblock %}

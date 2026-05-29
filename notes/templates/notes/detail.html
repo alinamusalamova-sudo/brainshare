@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ note.title }}</h2>
+
+    {% if note.image %}
+    <div style="margin: 15px 0;">
+        <img src="{{ note.image.url }}" alt="{{ note.title }}" style="max-width: 100%; max-height: 300px; border-radius: 10px;">
+    </div>
+    {% endif %}
+
+    <p><strong>Предмет:</strong> {{ note.subject }}</p>
+    <p>{{ note.content }}</p>
+    <p><small>Автор: {{ note.author.username }} | {{ note.created_at|date:"d.m.Y" }}</small></p>
+
+    <hr>
+    <h3>Комментарии</h3>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'notes:add_comment' note.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="background: #667eea; color: white; padding: 10px; border: none; border-radius: 5px;">
+                Отправить комментарий
+            </button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'users:login' %}">Войдите</a>, чтобы оставить комментарий</p>
+    {% endif %}
+
+    <hr>
+
+    {% if comments %}
+        {% for comment in comments %}
+            <div style="border-left: 3px solid #667eea; padding-left: 10px; margin-bottom: 10px;">
+                <p><strong>{{ comment.author.username }}</strong> <small>({{ comment.created_at|date:"d.m.Y H:i" }})</small></p>
+                <p>{{ comment.text }}</p>
+
+                {% if user == comment.author %}
+                    <div style="margin-top: 10px;">
+                        <a href="{% url 'notes:edit_comment' comment.id %}" style="text-decoration: none; border: 1px solid #667eea; color: #667eea; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
+                            Изменить
+                        </a>
+                        <a href="{% url 'notes:delete_comment' comment.id %}" style="text-decoration: none; border: 1px solid #ff69b4; background: #fff0f5; color: #d1005a; padding: 5px 10px; border-radius: 5px; font-size: 14px; margin-left: 10px;">
+                            Удалить
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Комментариев пока нет. Будьте первым!</p>
+    {% endif %}
+
+    <a href="{% url 'notes:add_to_favorites' note.id %}" style="display: inline-block; margin: 20px 0; background: #667eea; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;">
+        Добавить в избранное
+    </a>
+
+    <p><a href="{% url 'notes:note_list' %}">← Назад к списку заметок</a></p>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Избранное</h2>
+
+{% if notes %}
+    <div class="notes-grid">
+        {% for note in notes %}
+            <div class="note-card">
+                <h3><a href="{% url 'notes:detail' note.id %}">{{ note.title }}</a></h3>
+                <p>{{ note.content|truncatechars:100 }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <a href="{% url 'notes:clear_favorites' %}" style="background: #ff69b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">
+    Очистить избранное
+    </a>
+{% else %}
+    <p>У вас пока нет избранных заметок</p>
+{% endif %}
+{% endblock %}
